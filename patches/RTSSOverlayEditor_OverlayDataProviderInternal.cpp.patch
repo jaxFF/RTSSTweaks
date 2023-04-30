@@ -1,0 +1,16 @@
+--- OverlayDataProviderInternal.cpp	1969-12-31 17:00:00.000000000 -0700
++++ RTSSOverlayEditor_OverlayDataProviderInternal_modified.cpp	1969-12-31 17:00:00.000000000 -0700
+@@ -7,11 +7,13 @@
+ #include "OverlayDataSourceInternal.h"
+ #include "OverlayEditor.h"
+ #include "RTSSSharedMemory.h"
++#include <RTSSTweaks.h>
+ 
+ #include <float.h>
+ /////////////////////////////////////////////////////////////////////////////
+ COverlayDataProviderInternal::COverlayDataProviderInternal()
+ {
++// Testing!!!sss
+ }
+ /////////////////////////////////////////////////////////////////////////////
+ COverlayDataProviderInternal::~COverlayDataProviderInternal()

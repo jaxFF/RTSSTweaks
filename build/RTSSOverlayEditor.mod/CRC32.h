@@ -1,0 +1,1 @@
+/home/jaxne/z/RTSSTweaks/thirdparty/RTSSOverlayEditor/CRC32.h
