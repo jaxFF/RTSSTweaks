@@ -1,0 +1,6 @@
+; OverlayEditor.def : Declares the module parameters for the DLL.
+
+LIBRARY      "OverlayEditor"
+
+EXPORTS
+    ; Explicit exports can go here

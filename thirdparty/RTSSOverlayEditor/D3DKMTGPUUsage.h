@@ -1,0 +1,31 @@
+// D3DKMTGPUUsage.h: interface for the CD3DKMTGPUUsage class.
+//
+// created by Unwinder
+//////////////////////////////////////////////////////////////////////
+#ifndef _D3DKMTGPUUsage_H_INCLUDED_
+#define _D3DKMTGPUUsage_H_INCLUDED_
+//////////////////////////////////////////////////////////////////////
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+//////////////////////////////////////////////////////////////////////
+#define MAX_NODES	256
+//////////////////////////////////////////////////////////////////////
+class CD3DKMTGPUUsage  
+{
+public:
+	CD3DKMTGPUUsage();
+	virtual ~CD3DKMTGPUUsage();
+
+	void	CalcGpuUsage(DWORD dwTickCount, LARGE_INTEGER* lpNodeRunningTimeArr, DWORD dwNodeCount);
+	DWORD	GetGpuUsage(DWORD dwNode);
+	DWORD	GetNodeCount();
+
+	DWORD	m_dwTickCount;
+	DWORD	m_dwNodeCount;
+	LARGE_INTEGER m_qwNodeRunningTime[MAX_NODES];
+	DWORD	m_dwGpuUsage[MAX_NODES];
+};
+//////////////////////////////////////////////////////////////////////
+#endif
+//////////////////////////////////////////////////////////////////////
