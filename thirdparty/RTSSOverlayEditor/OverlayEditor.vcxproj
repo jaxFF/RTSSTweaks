@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6E28DD39-ECC3-42BB-A209-53976F50FF55}</ProjectGuid>
+    <RootNamespace>OverlayEditor</RootNamespace>
+    <Keyword>MFCDLLProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>16.0.32830.301</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\Include\HwInfo;..\..\..\Include\MSIAB;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>OVERLAYEDITOR_EXPORTS;WIN32;_WINDOWS;_DEBUG;_AFXEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>d3d9.lib;winmm.lib;setupapi.lib;pdh.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\..\Plugins\Client\$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>.\OverlayEditor.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\..\Include;..\..\..\Include\HwInfo;..\..\..\Include\MSIAB;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>OVERLAYEDITOR_EXPORTS;WIN32;_WINDOWS;NDEBUG;_AFXEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>d3d9.lib;winmm.lib;setupapi.lib;pdh.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\..\Plugins\Client\$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>.\OverlayEditor.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Release\$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration />
+      <ImportLibrary>.\Release\$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AddEmbeddedObjectDlg.cpp" />
+    <ClCompile Include="AIDA64Parser.cpp" />
+    <ClCompile Include="AnimatedImageSettingsDlg.cpp" />
+    <ClCompile Include="ATIADLInterface.cpp" />
+    <ClCompile Include="ATIADLWrapper.cpp" />
+    <ClCompile Include="CheckedListCtrl.cpp" />
+    <ClCompile Include="ColorPreviewWnd.cpp" />
+    <ClCompile Include="CPUInfo.cpp" />
+    <ClCompile Include="CPUTopology.cpp" />
+    <ClCompile Include="CRC32.cpp" />
+    <ClCompile Include="D3DKMTDeviceList.cpp" />
+    <ClCompile Include="D3DKMTGPUUsage.cpp" />
+    <ClCompile Include="D3DKMTInterface.cpp" />
+    <ClCompile Include="D3DKMTWrapper.cpp" />
+    <ClCompile Include="DataCompressor.cpp" />
+    <ClCompile Include="DynamicColor.cpp" />
+    <ClCompile Include="DynamicColorPickerDlg.cpp" />
+    <ClCompile Include="FormulaLexicalAnalyzer.cpp" />
+    <ClCompile Include="FormulaTranslator.cpp" />
+    <ClCompile Include="FormulaTranslatorVariableProvider.cpp" />
+    <ClCompile Include="GraphSettingsDlg.cpp" />
+    <ClCompile Include="HAL.cpp" />
+    <ClCompile Include="HALDataSource.cpp" />
+    <ClCompile Include="HALDataSourcesList.cpp" />
+    <ClCompile Include="HALImplementation.cpp" />
+    <ClCompile Include="HALImplementationATIADL.cpp" />
+    <ClCompile Include="HALImplementationIGCL.cpp" />
+    <ClCompile Include="HALImplementationNVAPI.cpp" />
+    <ClCompile Include="HALImplementationUnified.cpp" />
+    <ClCompile Include="HALPollingThread.cpp" />
+    <ClCompile Include="HypertextEditCtrl.cpp" />
+    <ClCompile Include="HypertextExtension.cpp" />
+    <ClCompile Include="HypertextParser.cpp" />
+    <ClCompile Include="IconImageList.cpp" />
+    <ClCompile Include="IGCLWrapper.cpp" />
+    <ClCompile Include="ImageSettingsDlg.cpp" />
+    <ClCompile Include="ImageWnd.cpp" />
+    <ClCompile Include="LayerSettingsDlg.cpp" />
+    <ClCompile Include="LexicalAnalyzer.cpp" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="MMTimer.cpp" />
+    <ClCompile Include="MultiString.cpp" />
+    <ClCompile Include="NVAPIInterface.cpp" />
+    <ClCompile Include="NVAPIWrapper.cpp" />
+    <ClCompile Include="Overlay.cpp" />
+    <ClCompile Include="OverlayAttributesLibrary.cpp" />
+    <ClCompile Include="OverlayAttributesLibraryStr.cpp" />
+    <ClCompile Include="OverlayDataProvider.cpp" />
+    <ClCompile Include="OverlayDataProviderAIDA.cpp" />
+    <ClCompile Include="OverlayDataProviderHAL.cpp" />
+    <ClCompile Include="OverlayDataProviderHwInfo.cpp" />
+    <ClCompile Include="OverlayDataProviderInternal.cpp" />
+    <ClCompile Include="OverlayDataProviderMSIAB.cpp" />
+    <ClCompile Include="OverlayDataProviderPerfCounter.cpp" />
+    <ClCompile Include="OverlayDataProviderSetupHALDlg.cpp" />
+    <ClCompile Include="OverlayDataSource.cpp" />
+    <ClCompile Include="OverlayDataSourceAddDlg.cpp" />
+    <ClCompile Include="OverlayDataSourceAIDA.cpp" />
+    <ClCompile Include="OverlayDataSourceHAL.cpp" />
+    <ClCompile Include="OverlayDataSourceHwInfo.cpp" />
+    <ClCompile Include="OverlayDataSourceInternal.cpp" />
+    <ClCompile Include="OverlayDataSourceMSIAB.cpp" />
+    <ClCompile Include="OverlayDataSourcePerfCounter.cpp" />
+    <ClCompile Include="OverlayDataSourcesDlg.cpp" />
+    <ClCompile Include="OverlayDataSourceSetupAIDADlg.cpp" />
+    <ClCompile Include="OverlayDataSourceSetupHALDlg.cpp" />
+    <ClCompile Include="OverlayDataSourceSetupHwInfoDlg.cpp" />
+    <ClCompile Include="OverlayDataSourceSetupMSIABDlg.cpp" />
+    <ClCompile Include="OverlayDataSourceSetupPerfCounterDlg.cpp" />
+    <ClCompile Include="OverlayDataSourcesList.cpp" />
+    <ClCompile Include="OverlayEditor.cpp" />
+    <ClCompile Include="OverlayEditorClientWnd.cpp" />
+    <ClCompile Include="OverlayEditorDlg.cpp" />
+    <ClCompile Include="OverlayEditorWnd.cpp" />
+    <ClCompile Include="OverlayLayer.cpp" />
+    <ClCompile Include="OverlayLayersDlg.cpp" />
+    <ClCompile Include="OverlayMacroList.cpp" />
+    <ClCompile Include="OverlayMessageHandler.cpp" />
+    <ClCompile Include="OverlaySettingsDlg.cpp" />
+    <ClCompile Include="OverlayUndoStack.cpp" />
+    <ClCompile Include="PerfCounterObjects.cpp" />
+    <ClCompile Include="PerfCounterSelectInstanceDlg.cpp" />
+    <ClCompile Include="PingThread.cpp" />
+    <ClCompile Include="PropertyListCtrl.cpp" />
+    <ClCompile Include="PtrListLite.cpp" />
+    <ClCompile Include="PtrStack.cpp" />
+    <ClCompile Include="RecentDynamicColorsWnd.cpp" />
+    <ClCompile Include="RichEditCtrlEx.cpp" />
+    <ClCompile Include="RTCoreDriver.cpp" />
+    <ClCompile Include="RTSSHooksInterface.cpp" />
+    <ClCompile Include="RTSSSharedMemoryInterface.cpp" />
+    <ClCompile Include="SelectSpriteDlg.cpp" />
+    <ClCompile Include="SMART.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="StringLite.cpp" />
+    <ClCompile Include="SZArray.cpp" />
+    <ClCompile Include="TextTable.cpp" />
+    <ClCompile Include="TextTableCell.cpp" />
+    <ClCompile Include="TextTableCellAddDlg.cpp" />
+    <ClCompile Include="TextTableCellSettingsDlg.cpp" />
+    <ClCompile Include="TextTableLine.cpp" />
+    <ClCompile Include="TextTablesDlg.cpp" />
+    <ClCompile Include="TextTableSettingsDlg.cpp" />
+    <ClCompile Include="TextTablesList.cpp" />
+    <ClCompile Include="ThreadAffinityMask.cpp" />
+    <ClCompile Include="TimestampedDataCache.cpp" />
+    <ClCompile Include="TokenString.cpp" />
+    <ClCompile Include="WOW64.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OverlayEditor.def" />
+    <None Include="res\OverlayEditor.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AddEmbeddedObjectDlg.h" />
+    <ClInclude Include="AIDA64Parser.h" />
+    <ClInclude Include="AnimatedImageSettingsDlg.h" />
+    <ClInclude Include="ATIADLInterface.h" />
+    <ClInclude Include="ATIADLWrapper.h" />
+    <ClInclude Include="CheckedListCtrl.h" />
+    <ClInclude Include="ColorPreviewWnd.h" />
+    <ClInclude Include="CPUInfo.h" />
+    <ClInclude Include="CPUTopology.h" />
+    <ClInclude Include="CRC32.h" />
+    <ClInclude Include="D3DKMTDeviceList.h" />
+    <ClInclude Include="D3DKMTGPUUsage.h" />
+    <ClInclude Include="D3DKMTInterface.h" />
+    <ClInclude Include="D3DKMTWrapper.h" />
+    <ClInclude Include="DataCompressor.h" />
+    <ClInclude Include="DynamicColor.h" />
+    <ClInclude Include="DynamicColorPickerDlg.h" />
+    <ClInclude Include="FormulaLexicalAnalyzer.h" />
+    <ClInclude Include="FormulaTranslator.h" />
+    <ClInclude Include="FormulaTranslatorVariableProvider.h" />
+    <ClInclude Include="GraphSettingsDlg.h" />
+    <ClInclude Include="HAL.h" />
+    <ClInclude Include="HALDataSource.h" />
+    <ClInclude Include="HALDataSourcesList.h" />
+    <ClInclude Include="HALImplementation.h" />
+    <ClInclude Include="HALImplementationATIADL.h" />
+    <ClInclude Include="HALImplementationIGCL.h" />
+    <ClInclude Include="HALImplementationNVAPI.h" />
+    <ClInclude Include="HALImplementationUnified.h" />
+    <ClInclude Include="HALPollingThread.h" />
+    <ClInclude Include="HwInfoWrapper.h" />
+    <ClInclude Include="HypertextEditCtrl.h" />
+    <ClInclude Include="HypertextExtension.h" />
+    <ClInclude Include="HypertextParser.h" />
+    <ClInclude Include="IconImageList.h" />
+    <ClInclude Include="IGCLWrapper.h" />
+    <ClInclude Include="ImageSettingsDlg.h" />
+    <ClInclude Include="ImageWnd.h" />
+    <ClInclude Include="LayerSettingsDlg.h" />
+    <ClInclude Include="LexicalAnalyzer.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="MMTimer.h" />
+    <ClInclude Include="MultiString.h" />
+    <ClInclude Include="NVAPIInterface.h" />
+    <ClInclude Include="NVAPIWrapper.h" />
+    <ClInclude Include="Overlay.h" />
+    <ClInclude Include="OverlayAttributesLibrary.h" />
+    <ClInclude Include="OverlayAttributesLibraryStr.h" />
+    <ClInclude Include="OverlayDataProvider.h" />
+    <ClInclude Include="OverlayDataProviderAIDA.h" />
+    <ClInclude Include="OverlayDataProviderHAL.h" />
+    <ClInclude Include="OverlayDataProviderHwInfo.h" />
+    <ClInclude Include="OverlayDataProviderInternal.h" />
+    <ClInclude Include="OverlayDataProviderMSIAB.h" />
+    <ClInclude Include="OverlayDataProviderPerfCounter.h" />
+    <ClInclude Include="OverlayDataProviderSetupHALDlg.h" />
+    <ClInclude Include="OverlayDataSource.h" />
+    <ClInclude Include="OverlayDataSourceAddDlg.h" />
+    <ClInclude Include="OverlayDataSourceAIDA.h" />
+    <ClInclude Include="OverlayDataSourceHAL.h" />
+    <ClInclude Include="OverlayDataSourceHwInfo.h" />
+    <ClInclude Include="OverlayDataSourceInternal.h" />
+    <ClInclude Include="OverlayDataSourceMSIAB.h" />
+    <ClInclude Include="OverlayDataSourcePerfCounter.h" />
+    <ClInclude Include="OverlayDataSourcesDlg.h" />
+    <ClInclude Include="OverlayDataSourceSetupAIDADlg.h" />
+    <ClInclude Include="OverlayDataSourceSetupHALDlg.h" />
+    <ClInclude Include="OverlayDataSourceSetupHwInfoDlg.h" />
+    <ClInclude Include="OverlayDataSourceSetupMSIABDlg.h" />
+    <ClInclude Include="OverlayDataSourceSetupPerfCounterDlg.h" />
+    <ClInclude Include="OverlayDataSourcesList.h" />
+    <ClInclude Include="OverlayEditor.h" />
+    <ClInclude Include="OverlayEditorClientWnd.h" />
+    <ClInclude Include="OverlayEditorDlg.h" />
+    <ClInclude Include="OverlayEditorMessages.h" />
+    <ClInclude Include="OverlayEditorWnd.h" />
+    <ClInclude Include="OverlayLayer.h" />
+    <ClInclude Include="OverlayLayersDlg.h" />
+    <ClInclude Include="OverlayMacroList.h" />
+    <ClInclude Include="OverlayMessageHandler.h" />
+    <ClInclude Include="OverlaySettingsDlg.h" />
+    <ClInclude Include="OverlayUndoStack.h" />
+    <ClInclude Include="PerfCounterObjects.h" />
+    <ClInclude Include="PerfCounterSelectInstanceDlg.h" />
+    <ClInclude Include="PingThread.h" />
+    <ClInclude Include="PropertyListCtrl.h" />
+    <ClInclude Include="PtrListLite.h" />
+    <ClInclude Include="PtrStack.h" />
+    <ClInclude Include="RecentDynamicColorsWnd.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="RichEditCtrlEx.h" />
+    <ClInclude Include="RTCoreDriver.h" />
+    <ClInclude Include="RTCoreErrors.h" />
+    <ClInclude Include="RTCoreSys.h" />
+    <ClInclude Include="RTFCErrors.h" />
+    <ClInclude Include="RTSSHooksInterface.h" />
+    <ClInclude Include="RTSSSharedMemoryInterface.h" />
+    <ClInclude Include="SelectSpriteDlg.h" />
+    <ClInclude Include="SMART.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StringLite.h" />
+    <ClInclude Include="SZArray.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextTable.h" />
+    <ClInclude Include="TextTableCell.h" />
+    <ClInclude Include="TextTableCellAddDlg.h" />
+    <ClInclude Include="TextTableCellSettingsDlg.h" />
+    <ClInclude Include="TextTableLine.h" />
+    <ClInclude Include="TextTablesDlg.h" />
+    <ClInclude Include="TextTableSettingsDlg.h" />
+    <ClInclude Include="TextTablesList.h" />
+    <ClInclude Include="ThreadAffinityMask.h" />
+    <ClInclude Include="TimestampedDataCache.h" />
+    <ClInclude Include="TokenString.h" />
+    <ClInclude Include="WOW64.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Icons\AIDA.ico" />
+    <Image Include="Icons\HwInfo.ico" />
+    <Image Include="Icons\icon1.ico" />
+    <Image Include="Icons\MoveDown.ico" />
+    <Image Include="Icons\MoveToBottom.ico" />
+    <Image Include="Icons\MoveToTop.ico" />
+    <Image Include="Icons\MoveUp.ico" />
+    <Image Include="Icons\MSIAB.ico" />
+    <Image Include="Icons\PerfCounter.ico" />
+    <Image Include="Icons\Remove.ico" />
+    <Image Include="Icons\RTSS.ico" />
+    <Image Include="Icons\Select.ico" />
+    <Image Include="Icons\SelectPlaceholder.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OverlayEditor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="OverlayEditor.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,293 @@
+﻿Build started 4/30/2023 3:06:47 AM.
+Logging verbosity is set to: Normal.     1>Project "Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.vcxproj" on node 2 (Build target(s)).
+     1>PrepareForBuild:
+         Creating directory "Debug\OverlayEditor.tlog\".
+       InitializeBuildStatus:
+         Creating "Debug\OverlayEditor.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX86\x86\CL.exe /c /I..\..\..\Include /I..\..\..\Include\HwInfo /I..\..\..\Include\MSIAB /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /diagnostics:column /Od /Oy- /D OVERLAYEDITOR_EXPORTS /D WIN32 /D _WINDOWS /D _DEBUG /D _AFXEXT /D _WINDLL /D _MBCS /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yc"stdafx.h" /Fp"Debug\OverlayEditor.pch" /Fo"Debug\\" /Fd"Debug\vc142.pdb" /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt stdafx.cpp
+     1>cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX86\x86\CL.exe /c /I..\..\..\Include /I..\..\..\Include\HwInfo /I..\..\..\Include\MSIAB /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /diagnostics:column /Od /Oy- /D OVERLAYEDITOR_EXPORTS /D WIN32 /D _WINDOWS /D _DEBUG /D _AFXEXT /D _WINDLL /D _MBCS /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\OverlayEditor.pch" /Fo"Debug\\" /Fd"Debug\vc142.pdb" /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt AddEmbeddedObjectDlg.cpp AIDA64Parser.cpp AnimatedImageSettingsDlg.cpp ATIADLInterface.cpp ATIADLWrapper.cpp CheckedListCtrl.cpp ColorPreviewWnd.cpp CPUInfo.cpp CPUTopology.cpp CRC32.cpp D3DKMTDeviceList.cpp D3DKMTGPUUsage.cpp D3DKMTInterface.cpp D3DKMTWrapper.cpp DataCompressor.cpp DynamicColor.cpp DynamicColorPickerDlg.cpp FormulaLexicalAnalyzer.cpp FormulaTranslator.cpp FormulaTranslatorVariableProvider.cpp GraphSettingsDlg.cpp HAL.cpp HALDataSource.cpp HALDataSourcesList.cpp HALImplementation.cpp HALImplementationATIADL.cpp HALImplementationIGCL.cpp HALImplementationNVAPI.cpp HALImplementationUnified.cpp HALPollingThread.cpp HypertextEditCtrl.cpp HypertextExtension.cpp HypertextParser.cpp IconImageList.cpp IGCLWrapper.cpp ImageSettingsDlg.cpp ImageWnd.cpp LayerSettingsDlg.cpp LexicalAnalyzer.cpp Log.cpp MMTimer.cpp MultiString.cpp NVAPIInterface.cpp NVAPIWrapper.cpp Overlay.cpp OverlayAttributesLibrary.cpp OverlayAttributesLibraryStr.cpp OverlayDataProvider.cpp OverlayDataProviderAIDA.cpp OverlayDataProviderHAL.cpp OverlayDataProviderHwInfo.cpp OverlayDataProviderInternal.cpp OverlayDataProviderMSIAB.cpp OverlayDataProviderPerfCounter.cpp OverlayDataProviderSetupHALDlg.cpp OverlayDataSource.cpp OverlayDataSourceAddDlg.cpp OverlayDataSourceAIDA.cpp OverlayDataSourceHAL.cpp OverlayDataSourceHwInfo.cpp OverlayDataSourceInternal.cpp OverlayDataSourceMSIAB.cpp OverlayDataSourcePerfCounter.cpp OverlayDataSourcesDlg.cpp OverlayDataSourceSetupAIDADlg.cpp OverlayDataSourceSetupHALDlg.cpp OverlayDataSourceSetupHwInfoDlg.cpp OverlayDataSourceSetupMSIABDlg.cpp OverlayDataSourceSetupPerfCounterDlg.cpp OverlayDataSourcesList.cpp OverlayEditor.cpp OverlayEditorClientWnd.cpp OverlayEditorDlg.cpp OverlayEditorWnd.cpp OverlayLayer.cpp OverlayLayersDlg.cpp OverlayMacroList.cpp OverlayMessageHandler.cpp OverlaySettingsDlg.cpp OverlayUndoStack.cpp PerfCounterObjects.cpp PerfCounterSelectInstanceDlg.cpp PingThread.cpp PropertyListCtrl.cpp PtrListLite.cpp PtrStack.cpp RecentDynamicColorsWnd.cpp RichEditCtrlEx.cpp RTCoreDriver.cpp RTSSHooksInterface.cpp RTSSSharedMemoryInterface.cpp SelectSpriteDlg.cpp SMART.cpp StringLite.cpp SZArray.cpp TextTable.cpp TextTableCell.cpp TextTableCellAddDlg.cpp TextTableCellSettingsDlg.cpp TextTableLine.cpp TextTablesDlg.cpp TextTableSettingsDlg.cpp TextTablesList.cpp ThreadAffinityMask.cpp TimestampedDataCache.cpp TokenString.cpp WOW64.cpp
+     1>cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+         WOW64.cpp
+         TokenString.cpp
+         TimestampedDataCache.cpp
+         ThreadAffinityMask.cpp
+         TextTablesList.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         TextTableSettingsDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         TextTablesDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         TextTableLine.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         TextTableCellSettingsDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         TextTableCellAddDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         TextTableCell.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         TextTable.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         SZArray.cpp
+         StringLite.cpp
+         SMART.cpp
+         SelectSpriteDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         RTSSSharedMemoryInterface.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\RTSSSharedMemoryInterface.cpp(6,10): fatal error C1083: Cannot open include file: 'RTSSSharedMemory.h': No such file or directory
+         RTSSHooksInterface.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         RTCoreDriver.cpp
+         RichEditCtrlEx.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Generating Code...
+         Compiling...
+         RecentDynamicColorsWnd.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         PtrStack.cpp
+         PtrListLite.cpp
+         PropertyListCtrl.cpp
+         PingThread.cpp
+         PerfCounterSelectInstanceDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         PerfCounterObjects.cpp
+         OverlayUndoStack.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlaySettingsDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayMessageHandler.cpp
+         OverlayMacroList.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayLayersDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayLayer.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayEditorWnd.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayEditorDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayEditorClientWnd.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayEditor.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataSourcesList.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayDataSourceSetupPerfCounterDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataSourceSetupMSIABDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Generating Code...
+         Compiling...
+         OverlayDataSourceSetupHwInfoDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataSourceSetupHALDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataSourceSetupAIDADlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataSourcesDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataSourcePerfCounter.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayDataSourceMSIAB.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayDataSourceInternal.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayDataSourceHwInfo.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayDataSourceHAL.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayDataSourceAIDA.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayDataSourceAddDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataSource.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataProviderSetupHALDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataProviderPerfCounter.cpp
+         OverlayDataProviderMSIAB.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         OverlayDataProviderInternal.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataProviderHwInfo.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\HwInfoWrapper.h(18,10): fatal error C1083: Cannot open include file: 'hwisenssm2.h': No such file or directory
+         OverlayDataProviderHAL.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         OverlayDataProviderAIDA.cpp
+         OverlayDataProvider.cpp
+         Generating Code...
+         Compiling...
+         OverlayAttributesLibraryStr.cpp
+         OverlayAttributesLibrary.cpp
+         Overlay.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         NVAPIWrapper.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         NVAPIInterface.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIInterface.h(7,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         MultiString.cpp
+         MMTimer.cpp
+         Log.cpp
+         LexicalAnalyzer.cpp
+         LayerSettingsDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         ImageWnd.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         ImageSettingsDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         IGCLWrapper.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\IGCLWrapper.h(7,10): fatal error C1083: Cannot open include file: 'igcl_api.h': No such file or directory
+         IconImageList.cpp
+         HypertextParser.cpp
+         HypertextExtension.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\RTSSSharedMemoryInterface.h(7,10): fatal error C1083: Cannot open include file: 'RTSSSharedMemory.h': No such file or directory
+         HypertextEditCtrl.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         HALPollingThread.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         HALImplementationUnified.cpp
+         HALImplementationNVAPI.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         Generating Code...
+         Compiling...
+         HALImplementationIGCL.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\IGCLWrapper.h(7,10): fatal error C1083: Cannot open include file: 'igcl_api.h': No such file or directory
+         HALImplementationATIADL.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\ATIADLInterface.h(8,10): fatal error C1083: Cannot open include file: 'adl_sdk.h': No such file or directory
+         HALImplementation.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\RTSSSharedMemoryInterface.h(7,10): fatal error C1083: Cannot open include file: 'RTSSSharedMemory.h': No such file or directory
+         HALDataSourcesList.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         HALDataSource.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         HAL.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         GraphSettingsDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         FormulaTranslatorVariableProvider.cpp
+         FormulaTranslator.cpp
+         FormulaLexicalAnalyzer.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\FormulaLexicalAnalyzer.cpp(257,27): warning C4477: 'sscanf_s' : format string '%c' requires an argument of type 'char *', but variadic argument 1 has type 'DWORD *'
+       Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\FormulaLexicalAnalyzer.cpp(257,27): message : this argument is used by a conversion specifier
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\FormulaLexicalAnalyzer.cpp(265,28): warning C4477: 'sscanf_s' : format string '%f' requires an argument of type 'float *', but variadic argument 1 has type 'DWORD *'
+         DynamicColorPickerDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         DynamicColor.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         DataCompressor.cpp
+         D3DKMTWrapper.cpp
+         D3DKMTInterface.cpp
+         D3DKMTGPUUsage.cpp
+         D3DKMTDeviceList.cpp
+         CRC32.cpp
+         CPUTopology.cpp
+         CPUInfo.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Generating Code...
+         Compiling...
+         ColorPreviewWnd.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         CheckedListCtrl.cpp
+         ATIADLWrapper.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\ATIADLInterface.h(8,10): fatal error C1083: Cannot open include file: 'adl_sdk.h': No such file or directory
+         ATIADLInterface.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\ATIADLInterface.h(8,10): fatal error C1083: Cannot open include file: 'adl_sdk.h': No such file or directory
+         AnimatedImageSettingsDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         AIDA64Parser.cpp
+         AddEmbeddedObjectDlg.cpp
+     1>Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Generating Code...
+     1>Done Building Project "Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+       "Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.vcxproj" (Build target) (1) ->
+       (ClCompile target) -> 
+         cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+
+
+       "Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.vcxproj" (Build target) (1) ->
+         cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\FormulaLexicalAnalyzer.cpp(257,27): warning C4477: 'sscanf_s' : format string '%c' requires an argument of type 'char *', but variadic argument 1 has type 'DWORD *'
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\FormulaLexicalAnalyzer.cpp(265,28): warning C4477: 'sscanf_s' : format string '%f' requires an argument of type 'float *', but variadic argument 1 has type 'DWORD *'
+
+
+       "Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.vcxproj" (Build target) (1) ->
+       (ClCompile target) -> 
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\RTSSSharedMemoryInterface.cpp(6,10): fatal error C1083: Cannot open include file: 'RTSSSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\HwInfoWrapper.h(18,10): fatal error C1083: Cannot open include file: 'hwisenssm2.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIInterface.h(7,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\IGCLWrapper.h(7,10): fatal error C1083: Cannot open include file: 'igcl_api.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\RTSSSharedMemoryInterface.h(7,10): fatal error C1083: Cannot open include file: 'RTSSSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\IGCLWrapper.h(7,10): fatal error C1083: Cannot open include file: 'igcl_api.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\ATIADLInterface.h(8,10): fatal error C1083: Cannot open include file: 'adl_sdk.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\RTSSSharedMemoryInterface.h(7,10): fatal error C1083: Cannot open include file: 'RTSSSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\NVAPIWrapper.h(22,10): fatal error C1083: Cannot open include file: 'nvapi.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayDataProviderMSIAB.h(8,10): fatal error C1083: Cannot open include file: 'MAHMSharedMemory.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\ATIADLInterface.h(8,10): fatal error C1083: Cannot open include file: 'adl_sdk.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\ATIADLInterface.h(8,10): fatal error C1083: Cannot open include file: 'adl_sdk.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+         Z:\RTSSTweaks\code\thirdparty\RTSSOverlayEditor\OverlayEditor.h(7,10): fatal error C1083: Cannot open include file: 'RTSSExports.h': No such file or directory
+
+    4 Warning(s)
+    69 Error(s)
+
+Time Elapsed 00:00:06.97
