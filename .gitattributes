@@ -1,0 +1,6 @@
+*.html linguist-vendored
+build/** linguist-vendored
+thirdparty/RTSSOverlayEditor/** linguist-vendored
+thirdparty/nvapi-developer/docs/** linguist-vendored
+thirdparty/rtss-sdk/Doc/** linguist-vendored
+thirdparty/rtss-sdk/Samples/** linguist-vendored
