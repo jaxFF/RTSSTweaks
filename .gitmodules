@@ -1,0 +1,6 @@
+[submodule "thirdparty/adl-sdk"]
+    path = thirdparty/adl-sdk
+    url = git@github.com:GPUOpen-LibrariesAndSDKs/display-library.git
+[submodule "thirdparty/igcl"]
+    path = thirdparty/igcl
+    url = git@github.com:intel/drivers.gpu.control-library.git
