@@ -1,7 +1,6 @@
 #include <stdint.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <nvapi.h>
 
 #if _WIN32 || _WIN64
 #define NvAPIInitalize_Address 0x0150E828
@@ -13,6 +12,7 @@
 #error Missing or undefined NvAPI NDA-exclusive function addresses
 #endif
 
+typedef uint8_t u8;
 typedef uint32_t u32;
 
 #define Breakpoint __asm int 3
@@ -30,9 +30,9 @@ struct NV_GPU_CLOCK_INFO_V2 {
     u32 Version;
     struct {
         u32 Frequency;
-        u32 Unk1[1];
+        u32 Unk[1];
     } extendedDomain[32];
-    u32 Unk1[224];
+    u32 Unk[224];
 };
 
 // TODO: This structure contains a struct 'rails' that is indexed through an array.
@@ -40,7 +40,7 @@ struct NV_GPU_CLOCK_INFO_V2 {
 typedef struct NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1 NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1;
 struct NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1 {
     u32 Version;
-    u32 Zero[9];
+    u32 Unk[9];
     u32 currVoltuV;
     u32 U32[8];
 };
@@ -50,7 +50,7 @@ struct NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1 {
     u32 Version;
     u32 CoolerCount;
     struct {
-        u32 Unk1[8];
+        u32 Unk[8];
         u32 CoolerIndex;
         u32 CurrentRpm;
         u32 LevelMin;
@@ -62,10 +62,21 @@ struct NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1 {
                    // TODO: Remove these bytes from the struct and manually calculate the version with them.
 };
 
+#define NV_GPU_CLIENT_POWER_TOPOLOGY_CHANNEL_ID_POWER 0 // TODO: Verify this one ??
+#define NV_GPU_CLIENT_POWER_TOPOLOGY_CHANNEL_ID_NORMALIZED_POWER 1
+
 typedef struct NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1;
-struct NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 {
+struct NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 { // Comparing HWiNFO64 values helped a *ton* in reversing this struct
     u32 Version;
-    u32 U32[42]; // TODO: Reverse this block of bits (see GetCurrentRelPower)
+    u32 numChannels;
+    struct {
+        u32 channelId;
+        u32 Unk1;
+        struct {
+            u32 mp;
+        } power;
+        u32 Unk2;
+    } channel[4];
 };
 
 typedef struct NV_GPU_VOLTAGE_DOMAINS_STATUS_V1 NV_GPU_VOLTAGE_DOMAINS_STATUS_V1;
@@ -76,16 +87,24 @@ struct NV_GPU_VOLTAGE_DOMAINS_STATUS_V1 {
 typedef struct NV_GPU_CLOCK_FREQUENCY_INFO_V2 NV_GPU_CLOCK_FREQUENCY_INFO_V2;
 struct NV_GPU_CLOCK_FREQUENCY_INFO_V2 { // Version = 131336, likely version 2
     u32 Version;
-    u32 U32[65]; // TODO: Reverse this
+    u32 Unk;
+    struct {
+        u32 Unk;
+        u32 frequency;
+    } Entries[32];
 };
 
 typedef struct NV_GPU_DYNAMIC_PSTATES_INFO_V1 NV_GPU_DYNAMIC_PSTATES_INFO_V1;
 struct NV_GPU_DYNAMIC_PSTATES_INFO_V1 {
     u32 Version;
-    u32 U32[17];
+    u32 Unk;
+    struct {
+        u32 bIsPresent; // ?? (TODO: reckon this is part of a bitfield inside of this u32, needs confirming)
+        u32 percentage;
+    } Entries[8];
 };
 
-struct NV_GPU_DYNAMIC_PSTATES_INFO_EX; // TODO: overlayeditor actually uses this variant 
+typedef NV_GPU_DYNAMIC_PSTATES_INFO_V1 NV_GPU_DYNAMIC_PSTATES_INFO_EX; // NOTE: overlayeditor actually uses this variant 
 
 typedef void* (*NvAPI_QueryInterface_t)(u32);
 typedef NvStatus (*NvAPI_Initalize_t)();
@@ -93,8 +112,8 @@ typedef NvStatus (*NvAPI_EnumPhysicalGPUs_t)(NvPhysicalGPUHandle[64], u32*);
 
 typedef NvStatus (*NvAPI_GPU_GetAllClocks_t)(NvPhysicalGPUHandle, NV_GPU_CLOCK_INFO_V2*);
 typedef NvStatus (*NvAPI_GPU_GetAllClockFrequencies_t)(NvPhysicalGPUHandle, NV_GPU_CLOCK_FREQUENCY_INFO_V2*); // TODO: Unrequired, public facing.
-typedef NvStatus (*NvAPI_GPU_GetDynamicPstates_t)(NvPhysicalGPUHandle, NV_GPU_DYNAMIC_PSTATES_INFO_V1*); 
-typedef NvStatus (*NvAPI_GPU_GetDynamicPstatesInfoEx_t)(NvPhysicalGPUHandle, NV_GPU_DYNAMIC_PSTATES_INFO_EX*); // TODO: Unrequired, public facing. overlayeditor actually uses this variant. Unknown address.
+// DEPRECATED: typedef NvStatus (*NvAPI_GPU_GetDynamicPstates_t)(NvPhysicalGPUHandle, NV_GPU_DYNAMIC_PSTATES_INFO_V1*); // 0x60DED2ED
+typedef NvStatus (*NvAPI_GPU_GetDynamicPstatesInfoEx_t)(NvPhysicalGPUHandle, NV_GPU_DYNAMIC_PSTATES_INFO_EX*); // 0x60DED2ED
  
 typedef NvStatus (*NvAPI_GPU_ClientVoltRailsGetStatus_t)(NvPhysicalGPUHandle, NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1*);
 typedef NvStatus (*NvAPI_GPU_ClientFanCoolersGetStatus_t)(NvPhysicalGPUHandle, NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1*);
@@ -139,16 +158,16 @@ int main() {
     ClockFrequencies.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLOCK_FREQUENCY_INFO_V2, 2);
     Assert(NvAPI_GPU_GetAllClockFrequencies(GpuHandle, &ClockFrequencies) == 0);
 
-    NvAPI_GPU_GetDynamicPstates_t NvAPI_GPU_GetDynamicPstates = {0};
-    NvAPI_GPU_GetDynamicPstates = NvAPI_QueryInterface(0x60DED2ED);
+    NvAPI_GPU_GetDynamicPstatesInfoEx_t NvAPI_GPU_GetDynamicPstatesInfoEx = {0};
+    NvAPI_GPU_GetDynamicPstatesInfoEx = NvAPI_QueryInterface(0x60DED2ED);
 
-    NV_GPU_DYNAMIC_PSTATES_INFO_V1 Pstates = {0};
+    NV_GPU_DYNAMIC_PSTATES_INFO_EX Pstates = {0};
     Pstates.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_DYNAMIC_PSTATES_INFO_V1, 1);
-    Assert(NvAPI_GPU_GetDynamicPstates(GpuHandle, &Pstates) == 0);
+    Assert(NvAPI_GPU_GetDynamicPstatesInfoEx(GpuHandle, &Pstates) == 0);
     Breakpoint;
 
     NvAPI_GPU_ClientVoltRailsGetStatus_t NvAPI_GPU_ClientVoltRailsGetStatus = 0;
-    NvAPI_GPU_ClientVoltRailsGetStatus = NvAPI_QueryInterface(0x465f9bcf);
+    NvAPI_GPU_ClientVoltRailsGetStatus = NvAPI_QueryInterface(0x465F9BCF);
 
     NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1 VoltRailStatus = {0};
     VoltRailStatus.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1, 1);
@@ -164,9 +183,9 @@ int main() {
     NvAPI_GPU_ClientPowerTopologyGetStatus_t NvAPI_GPU_ClientPowerTopologyGetStatus = {0};
     NvAPI_GPU_ClientPowerTopologyGetStatus = NvAPI_QueryInterface(0xEDCF624E);
 
-    NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 PowerTopology = {0};
+    NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 PowerTopology = {0}; 
     PowerTopology.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1, 1);
-    Assert(NvAPI_GPU_ClientPowerTopologyGetStatus(GpuHandle, &PowerTopology));
+    Assert(NvAPI_GPU_ClientPowerTopologyGetStatus(GpuHandle, &PowerTopology) == 0);
     Breakpoint;
 
     NvAPI_GPU_GetVoltageDomainsStatus_t NvAPI_GPU_GetVoltageDomainsStatus = 0;
