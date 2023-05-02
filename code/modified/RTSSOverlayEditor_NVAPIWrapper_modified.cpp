@@ -3,7 +3,6 @@
 // created by Unwinder
 //////////////////////////////////////////////////////////////////////
 #include "StdAfx.h"
-#include <nvapi_shim.c>
 #include "NVAPIWrapper.h"
 
 #include "Log.h"

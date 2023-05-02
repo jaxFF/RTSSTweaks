@@ -69,10 +69,9 @@ for file in $(find ${patches_path} -type f ); do
     [ -d $patch_target_name ] || mkdir $patch_target_name
 
     for thirdparty_code_file in $(find ${thirdparty_to_patch} -type f -regex '.*/.*\.\(c\|cpp\|h\|hpp\)$' ); do
-        [ -f ./$patch_target_name/$patchtar ] || cp $thirdparty_code_file ./${patch_target_name}/ 2> /dev/null
+        cp $thirdparty_code_file ./${patch_target_name}/ 2> /dev/null
         chmod +w $patch_target_name/$patchtar 2> /dev/null
     done
-    break
 done 
 
 patch_dirs=( `for i in ${patch_dirs[@]}; do echo $i; done | sort -u` ) # Eliminate duplicates with sort -u. Modifies order.

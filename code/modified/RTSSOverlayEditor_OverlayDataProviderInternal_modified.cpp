@@ -7,7 +7,7 @@
 #include "OverlayDataSourceInternal.h"
 #include "OverlayEditor.h"
 #include "RTSSSharedMemory.h"
-#include <RTSSTweaks.h>
+//#include <RTSSTweaks.h>
 
 #include <float.h>
 /////////////////////////////////////////////////////////////////////////////
