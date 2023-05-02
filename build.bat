@@ -10,7 +10,8 @@ echo Compilation Line: %MSVC_CommonCompiler%
 
 if not exist %BuildDir% mkdir %BuildDir%
 pushd %BuildDir%
-cl.exe %MSVC_CommonCompiler% %CodeDir%\RTSSTweaks.c
+REM cl.exe %MSVC_CommonCompiler% %CodeDir%\RTSSTweaks.c
+cl.exe -DBUILD_SCRIPT %MSVC_CommonCompiler% %CodeDir%\nvapi_shim.c
 del *.ilk
 del *.obj
 popd

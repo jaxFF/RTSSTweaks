@@ -131,6 +131,7 @@ typedef NvStatus (*NvAPI_GPU_ClientPowerTopologyGetStatus_t)(NvPhysicalGPUHandle
 
 typedef NvStatus (*NvAPI_GPU_GetVoltageDomainsStatus_t)(NvPhysicalGPUHandle, NV_GPU_VOLTAGE_DOMAINS_STATUS_V1*); // 0xC16C7E2C  Maxwell only, Assert that the gpu is > maxwell I guess.
 
+#ifdef BUILD_SCRIPT
 int main() {
     // NOTE, TODO: Ensure this test function is compiled with a 32-bit version of cl.exe
 
@@ -231,3 +232,4 @@ int main() {
 
     return 0;
 }
+#endif
