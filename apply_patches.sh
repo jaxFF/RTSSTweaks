@@ -68,18 +68,12 @@ for file in $(find ${patches_path} -type f ); do
 
     [ -d $patch_target_name ] || mkdir $patch_target_name
 
-    # superuser.com/a/245770
     for thirdparty_code_file in $(find ${thirdparty_to_patch} -type f -regex '.*/.*\.\(c\|cpp\|h\|hpp\)$' ); do
-        if [[ "$thirdparty_code_file" =~ ${patchtar} ]]; then
-            [ -f ./$patch_target_name/$patchtar ] || rm $patch_target_name/$patchtar > /dev/null
-            [ -f ./$patch_target_name/$patchtar ] || cp $thirdparty_code_file ./${patch_target_name}/
-            chmod +w $patch_target_name/$patchtar
-        else 
-            [ -f ./${patch_target_name}/${thirdparty_code_file##*/} ] || ln -sf $thirdparty_code_file ./${patch_target_name}/
-        fi
+        [ -f ./$patch_target_name/$patchtar ] || cp $thirdparty_code_file ./${patch_target_name}/ 2> /dev/null
+        chmod +w $patch_target_name/$patchtar 2> /dev/null
     done
+    break
 done 
-
 
 patch_dirs=( `for i in ${patch_dirs[@]}; do echo $i; done | sort -u` ) # Eliminate duplicates with sort -u. Modifies order.
 #printf '%s\n' "${patch_dirs[@]}"
