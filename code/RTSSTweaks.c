@@ -13,6 +13,7 @@
 #endif
 
 typedef uint8_t u8;
+typedef uint16_t u16;
 typedef uint32_t u32;
 
 #define Breakpoint __asm int 3
@@ -29,34 +30,53 @@ typedef struct NV_GPU_CLOCK_INFO_V2 NV_GPU_CLOCK_INFO_V2;
 struct NV_GPU_CLOCK_INFO_V2 {
     u32 Version;
     struct {
-        u32 Frequency;
+        u32 effectiveFrequency;
         u32 Unk[1];
     } extendedDomain[32];
+
     u32 Unk[224];
 };
 
-// TODO: This structure contains a struct 'rails' that is indexed through an array.
-//  'currVoltuV' is a variable internal to 'rails' structure. Finish this.
+enum NV_GPU_CLOCK_FREQUENCIES_CLOCK_TYPE { // Directly from NVIDIA public docs
+    NV_GPU_CLOCK_FREQUENCIES_CURRENT_FREQ = 0, 
+    NV_GPU_CLOCK_FREQUENCIES_BASE_CLOCK = 1, 
+    NV_GPU_CLOCK_FREQUENCIES_BOOST_CLOCK = 2, 
+    NV_GPU_CLOCK_FREQUENCIES_CLOCK_TYPE_NUM = 32 
+};
+
+typedef struct NV_GPU_CLOCK_FREQUENCY_INFO_V2 NV_GPU_CLOCK_FREQUENCY_INFO_V2;
+struct NV_GPU_CLOCK_FREQUENCY_INFO_V2 { // Version = 131336, likely version 2
+    u32 Version;
+    u32 ClockType; 
+    struct {
+        u32 Unk;
+        u32 frequency;
+    } domain[32];
+};
+
 typedef struct NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1 NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1;
 struct NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1 {
     u32 Version;
-    u32 Unk[9];
-    u32 currVoltuV;
-    u32 U32[8];
+    struct {
+        u8 railId;
+        u8 Unk[2];
+        u32 currVoltuV;
+    } rails[8];
+    u32 U32[2];
 };
 
 typedef struct NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1 NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1;
 struct NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1 {
     u32 Version;
-    u32 CoolerCount;
+    u32 numCoolers;
     struct {
         u32 Unk[8];
         u32 CoolerIndex;
-        u32 CurrentRpm;
-        u32 LevelMin;
-        u32 LevelMax;
-        u32 LevelTarget;
-    } Entries[20];
+        u32 rpmCurr;
+        u32 levelMin;
+        u32 levelMax;
+        u32 levelTarget;
+    } coolers[20];
     u32 Unk1[164]; // Why the fuck are all these bytes used to make the version? This is super inefficent.
                    //  SURELY they aren't all indexed as fan entires here, no?
                    // TODO: Remove these bytes from the struct and manually calculate the version with them.
@@ -82,16 +102,6 @@ struct NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 { // Comparing HWiNFO64 values hel
 typedef struct NV_GPU_VOLTAGE_DOMAINS_STATUS_V1 NV_GPU_VOLTAGE_DOMAINS_STATUS_V1;
 struct NV_GPU_VOLTAGE_DOMAINS_STATUS_V1 {
     u32 Version;
-};
-
-typedef struct NV_GPU_CLOCK_FREQUENCY_INFO_V2 NV_GPU_CLOCK_FREQUENCY_INFO_V2;
-struct NV_GPU_CLOCK_FREQUENCY_INFO_V2 { // Version = 131336, likely version 2
-    u32 Version;
-    u32 Unk;
-    struct {
-        u32 Unk;
-        u32 frequency;
-    } Entries[32];
 };
 
 typedef struct NV_GPU_DYNAMIC_PSTATES_INFO_V1 NV_GPU_DYNAMIC_PSTATES_INFO_V1;
@@ -139,7 +149,7 @@ int main() {
     NvAPI_Initalize();
 
     u32 GpuCount = 0;
-    NvPhysicalGPUHandle GpuHandles[64] = {0};
+    NvPhysicalGPUHandle GpuHandles[64] = { 0 };
     NvAPI_EnumPhysicalGPUs(GpuHandles, &GpuCount);
 
     NvPhysicalGPUHandle GpuHandle = GpuHandles[0];
@@ -147,16 +157,24 @@ int main() {
     NvAPI_GPU_GetAllClocks_t NvAPI_GPU_GetAllClocks = 0;
     NvAPI_GPU_GetAllClocks = NvAPI_QueryInterface(0x1BD69F49);
 
-    NV_GPU_CLOCK_INFO_V2 ClocksInfo = {0};
+    NV_GPU_CLOCK_INFO_V2 ClocksInfo = { 0 };
     ClocksInfo.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLOCK_INFO_V2, 2);
     Assert(NvAPI_GPU_GetAllClocks(GpuHandle, &ClocksInfo) == 0); // core clock = 1800000, memory clock = 10702000
 
-    NvAPI_GPU_GetAllClockFrequencies_t NvAPI_GPU_GetAllClockFrequencies = {0};
+    NvAPI_GPU_GetAllClockFrequencies_t NvAPI_GPU_GetAllClockFrequencies = { 0 };
     NvAPI_GPU_GetAllClockFrequencies = NvAPI_QueryInterface(0xDCB616C3);
+    
+    { // Same results.
+        NV_GPU_CLOCK_FREQUENCY_INFO_V2 ClockFrequencies1 = { 0 };
+        ClockFrequencies1.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLOCK_FREQUENCY_INFO_V2, 2);
+        Assert(NvAPI_GPU_GetAllClockFrequencies(GpuHandle, &ClockFrequencies1) == 0);
 
-    NV_GPU_CLOCK_FREQUENCY_INFO_V2 ClockFrequencies = {0};
-    ClockFrequencies.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLOCK_FREQUENCY_INFO_V2, 2);
-    Assert(NvAPI_GPU_GetAllClockFrequencies(GpuHandle, &ClockFrequencies) == 0);
+        NV_GPU_CLOCK_FREQUENCY_INFO_V2 ClockFrequencies2 = { 0 };
+        ClockFrequencies2.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLOCK_FREQUENCY_INFO_V2, 2);
+        //ClockFrequencies2.Unk = NV_GPU_CLOCK_FREQUENCIES_CURRENT_FREQ;
+        Assert(NvAPI_GPU_GetAllClockFrequencies(GpuHandle, &ClockFrequencies2) == 0);
+        Breakpoint;
+    }
 
     NvAPI_GPU_GetDynamicPstatesInfoEx_t NvAPI_GPU_GetDynamicPstatesInfoEx = {0};
     NvAPI_GPU_GetDynamicPstatesInfoEx = NvAPI_QueryInterface(0x60DED2ED);
@@ -173,6 +191,22 @@ int main() {
     VoltRailStatus.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1, 1);
     Assert(NvAPI_GPU_ClientVoltRailsGetStatus(GpuHandle, &VoltRailStatus) == 0);
 
+    // NOTE: We'll have to write shim-code for this function because the nvapi.dll 
+    //  result doesn't match the NDA sdk that RTSSOverlayEditor uses.
+    //  Basically, NVIDIA sucks.
+#define NV_GPU_CLIENT_VOLT_DOMAIN_CORE 0xFF // TODO: Determine this actual value
+    VoltRailStatus.rails[0x4].railId = NV_GPU_CLIENT_VOLT_DOMAIN_CORE;
+
+    // Usage code
+    for (u8 iRail = 0; iRail < 8; iRail++) {
+        if (VoltRailStatus.rails[iRail].railId == NV_GPU_CLIENT_VOLT_DOMAIN_CORE) {
+            u32 GPUCoreVoltage = VoltRailStatus.rails[iRail].currVoltuV / 1000;
+            //Breakpoint;
+        }
+    }
+
+    Breakpoint;
+
     NvAPI_GPU_ClientFanCoolersGetStatus_t NvAPI_GPU_ClientFanCoolersGetStatus = 0;
     NvAPI_GPU_ClientFanCoolersGetStatus = NvAPI_QueryInterface(0x35AED5E8);
 
@@ -186,7 +220,6 @@ int main() {
     NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 PowerTopology = {0}; 
     PowerTopology.Version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1, 1);
     Assert(NvAPI_GPU_ClientPowerTopologyGetStatus(GpuHandle, &PowerTopology) == 0);
-    Breakpoint;
 
     NvAPI_GPU_GetVoltageDomainsStatus_t NvAPI_GPU_GetVoltageDomainsStatus = 0;
     NvAPI_GPU_GetVoltageDomainsStatus = NvAPI_QueryInterface(0x0C16C7E2C); // Oops 0A4DFD3F2 is NvAPI_GPU_ClientPowerTopologyGetInfo 
