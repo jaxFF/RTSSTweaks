@@ -35,15 +35,19 @@ typedef u64 NvU64;
 typedef s32 NvS32;
 typedef bool NvBool;
 
-typedef u32 NvPhysicalGpuHandle;
+typedef struct NvPhysicalGpuHandle__ NvPhysicalGpuHandle__;
+struct NvPhysicalGpuHandle__ { u32 U32; };
+typedef NvPhysicalGpuHandle__ NvPhysicalGpuHandle;
 #endif
 
 #ifdef NVAPI_INIT_STRUCT
 #undef NVAPI_INIT_STRUCT
 #endif
 
-#define NVAPI_INIT_STRUCT(Struct, Version) NV_MAKE_STRUCT_VERSION(Struct, Version)
+#define NVAPI_INIT_STRUCT(Struct, Version) NV_MAKE_STRUCT_VERSION(Struct, Version);
 #define NV_MAKE_STRUCT_VERSION(Struct, Version) (sizeof(Struct) | (Version << 16))
+
+#include "nvapi_cooler_enums.h"
 
 #ifndef _NVAPI_H
 typedef struct NV_GPU_CLOCK_INFO_V2 NV_GPU_CLOCK_INFO_V2;
@@ -74,6 +78,20 @@ struct NV_GPU_CLOCK_FREQUENCY_INFO_V2 { // version = 131336, likely version 2
         u32 frequency;
     } domain[32];
 };
+
+typedef struct NV_GPU_DYNAMIC_PSTATES_INFO_V1 NV_GPU_DYNAMIC_PSTATES_INFO_V1;
+struct NV_GPU_DYNAMIC_PSTATES_INFO_V1 {
+    u32 version;
+    u32 Unk;
+    struct {
+        u32 bIsPresent; // ?? (TODO: reckon this is part of a bitfield inside of this u32, needs confirming)
+        u32 percentage;
+    } Entries[8];
+};
+
+#ifndef _NVAPI_H
+typedef NV_GPU_DYNAMIC_PSTATES_INFO_V1 NV_GPU_DYNAMIC_PSTATES_INFO_EX; // NOTE: overlayeditor actually uses this variant 
+#endif
 
 #define NV_GPU_CLIENT_VOLT_DOMAIN_CORE 0xFF // TODO: Determine this actual value
 #define NV_GPU_CLIENT_VOLT_DOMAIN_MAX_ENTRIES 8
@@ -123,24 +141,82 @@ struct NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 { // Comparing HWiNFO64 values hel
     } channels[4];
 };
 
+#ifndef _NVAPI_H
+#define NVAPI_MAX_GPU_PERF_VOLTAGES 16
+#endif
+
 typedef struct NV_GPU_VOLTAGE_DOMAINS_STATUS_V1 NV_GPU_VOLTAGE_DOMAINS_STATUS_V1;
 struct NV_GPU_VOLTAGE_DOMAINS_STATUS_V1 {
     u32 version;
-};
-
-typedef struct NV_GPU_DYNAMIC_PSTATES_INFO_V1 NV_GPU_DYNAMIC_PSTATES_INFO_V1;
-struct NV_GPU_DYNAMIC_PSTATES_INFO_V1 {
-    u32 version;
-    u32 Unk;
+    u32 U32;
+    u32 numDomains;
     struct {
-        u32 bIsPresent; // ?? (TODO: reckon this is part of a bitfield inside of this u32, needs confirming)
-        u32 percentage;
-    } Entries[8];
+        u32 domainId;
+        u32 voltageuV;
+    } domains[NVAPI_MAX_GPU_PERF_VOLTAGES];
 };
 
-#ifndef _NVAPI_H
-typedef NV_GPU_DYNAMIC_PSTATES_INFO_V1 NV_GPU_DYNAMIC_PSTATES_INFO_EX; // NOTE: overlayeditor actually uses this variant 
-#endif
+#define NVAPI_MAX_COOLERS_PER_GPU_V1 3
+#define NVAPI_MAX_COOLERS_PER_GPU_V2 20
+#define NVAPI_MAX_COOLERS_PER_GPU_V3 NVAPI_MAX_COOLERS_PER_GPU_V2
+
+#define NVAPI_MAX_COOLERS_PER_GPU NVAPI_MAX_COOLERS_PER_GPU_V3
+#define NVAPI_MIN_COOLER_LEVEL 0
+#define NVAPI_MAX_COOLER_LEVEL 100
+#define NVAPI_MAX_COOLER_LEVELS 24
+
+typedef struct NV_GPU_GETCOOLER_SETTINGS NV_GPU_GETCOOLER_SETTINGS;
+#pragma pack(push, 8)
+struct NV_GPU_GETCOOLER_SETTINGS {
+    u32 version; // structure version
+    u32 count; // number of associated coolers with the selected GPU
+    struct {
+        NV_COOLER_TYPE type; // type of cooler - FAN, WATER, LIQUID_NO2...
+        NV_COOLER_CONTROLLER controller; // internal, ADI
+        u32 defaultMinLevel; // the min default value % of the cooler
+        u32 defaultMaxLevel; // the max default value % of the cooler
+        u32 currentMinLevel; // the current allowed min value % of the cooler
+        u32 currentMaxLevel; // the current allowed max value % of the cooler
+        u32 currentLevel; // the current value % of the cooler
+        NV_COOLER_POLICY defaultPolicy; // cooler control policy - auto-perf, auto-thermal, manual, hybrid...
+        NV_COOLER_POLICY currentPolicy; // cooler control policy - auto-perf, auto-thermal, manual, hybrid...
+        NV_COOLER_TARGET target; // cooling target - GPU, memory, chipset, powersupply, Visual Computing Device...
+        NV_COOLER_CONTROL controlType; // toggle or variable?
+        NV_COOLER_ACTIVITY_LEVEL active; // is the cooler active - fan spinning...
+    } cooler[NVAPI_MAX_COOLERS_PER_GPU];
+};
+#pragma pack(pop)
+
+typedef struct NV_COOLER_TACHOMETER NV_COOLER_TACHOMETER;
+struct NV_COOLER_TACHOMETER {
+    u32 speedRPM; // current tachometer reading in RPM
+    u8 bSupported; // cooler supports tach functionality?
+    u32 maxSpeedRPM; // Maximum RPM corresponding to 100% defaultMaxLevel
+    u32 minSpeedRPM; // Minimum RPM corresponding to 100% defaultMinLevel
+};
+
+typedef struct NV_GPU_GETCOOLER_SETTINGS_V3 NV_GPU_GETCOOLER_SETTINGS_V3;
+struct NV_GPU_GETCOOLER_SETTINGS_V3 { // 1288 bytes..
+    u32 version; // structure version
+    u32 count; // number of associated coolers with the selected GPU
+    struct {
+        NV_COOLER_TYPE type; // type of cooler - FAN, WATER, LIQUID_NO2...
+        NV_COOLER_CONTROLLER controller; // internal, ADI
+        u32 defaultMinLevel; // the min default value % of the cooler
+        u32 defaultMaxLevel; // the max default value % of the cooler
+        u32 currentMinLevel; // the current allowed min value % of the cooler
+        u32 currentMaxLevel; // the current allowed max value % of the cooler
+        u32 currentLevel; // the current value % of the cooler
+        NV_COOLER_POLICY defaultPolicy; // cooler control policy - auto-perf, auto-thermal, manual, hybrid...
+        NV_COOLER_POLICY currentPolicy; // cooler control policy - auto-perf, auto-thermal, manual, hybrid...
+        NV_COOLER_TARGET target; // cooling target - GPU, memory, chipset, powersupply, Visual Computing Device...
+        NV_COOLER_CONTROL controlType; // toggle or variable?
+        NV_COOLER_ACTIVITY_LEVEL active; // is the cooler active - fan spinning...
+        NV_COOLER_TACHOMETER tachometer; // cooler tachometer info
+    } cooler[NVAPI_MAX_COOLERS_PER_GPU];
+};
+
+struct NV_GPU_GETCOOLER_SETTINGS_V4; // TODO: PX1 uses 1368 bytes here. Reversing from here should be ez, *if I had a GTX card on hand*
 
 typedef void* (*NvAPI_QueryInterface_t)(u32);
 typedef NvStatus (*NvAPI_Initalize_t)();
@@ -157,11 +233,14 @@ typedef NvStatus (*NvAPI_GPU_ClientVoltRailsGetStatus_t)(NvPhysicalGpuHandle, NV
 typedef NvStatus (*NvAPI_GPU_ClientFanCoolersGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1*);
 typedef NvStatus (*NvAPI_GPU_ClientPowerTopologyGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1*);
 
+typedef NvStatus (*NvAPI_GPU_GetCoolerSettings_t)(NvPhysicalGpuHandle, NV_COOLER_TARGET, NV_GPU_GETCOOLER_SETTINGS*); // 0xDA141340
+
 typedef NvStatus (*NvAPI_GPU_GetVoltageDomainsStatus_t)(NvPhysicalGpuHandle, NV_GPU_VOLTAGE_DOMAINS_STATUS_V1*); // 0xC16C7E2C  Maxwell only, Assert that the gpu is > maxwell I guess.
 
 NvAPI_GPU_ClientVoltRailsGetStatus_t NvAPI_GPU_ClientVoltRailsGetStatus = 0;
 NvAPI_GPU_ClientFanCoolersGetStatus_t NvAPI_GPU_ClientFanCoolersGetStatus = 0;
 NvAPI_GPU_ClientPowerTopologyGetStatus_t NvAPI_GPU_ClientPowerTopologyGetStatus = {0};
+NvAPI_GPU_GetCoolerSettings_t NvAPI_GPU_GetCoolerSettings = 0;
 NvAPI_GPU_GetVoltageDomainsStatus_t NvAPI_GPU_GetVoltageDomainsStatus = 0;
 
 #ifndef OVERLAYEDITOR_BUILD
@@ -209,7 +288,7 @@ int main() {
         ClockFrequencies2.version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLOCK_FREQUENCY_INFO_V2, 2);
         //ClockFrequencies2.Unk = NV_GPU_CLOCK_FREQUENCIES_CURRENT_FREQ;
         Assert(NvAPI_GPU_GetAllClockFrequencies(GpuHandle, &ClockFrequencies2) == 0);
-        Breakpoint;
+//        Breakpoint;
     }
 
     NvAPI_GPU_GetDynamicPstatesInfoEx = NvAPI_QueryInterface(0x60DED2ED);
@@ -217,7 +296,7 @@ int main() {
     NV_GPU_DYNAMIC_PSTATES_INFO_EX Pstates = {0};
     Pstates.version = NV_MAKE_STRUCT_VERSION(NV_GPU_DYNAMIC_PSTATES_INFO_V1, 1);
     Assert(NvAPI_GPU_GetDynamicPstatesInfoEx(GpuHandle, &Pstates) == 0);
-    Breakpoint;
+//    Breakpoint;
 
     NvAPI_GPU_ClientVoltRailsGetStatus = NvAPI_QueryInterface(0x465F9BCF);
 
@@ -241,7 +320,7 @@ int main() {
         }
     }
 
-    Breakpoint;
+//    Breakpoint;
 
     NvAPI_GPU_ClientFanCoolersGetStatus = NvAPI_QueryInterface(0x35AED5E8);
 
@@ -254,13 +333,20 @@ int main() {
     NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1 PowerTopology = {0}; 
     PowerTopology.version = NV_MAKE_STRUCT_VERSION(NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1, 1);
     Assert(NvAPI_GPU_ClientPowerTopologyGetStatus(GpuHandle, &PowerTopology) == 0);
+    
+    NvAPI_GPU_GetCoolerSettings = NvAPI_QueryInterface(0xDA141340);
+
+    NV_GPU_GETCOOLER_SETTINGS_V3 CoolerSettings = {0};
+    CoolerSettings.version = NV_MAKE_STRUCT_VERSION(NV_GPU_GETCOOLER_SETTINGS_V3, 3);
+    Assert(NvAPI_GPU_GetCoolerSettings(GpuHandle, 1, (NV_GPU_GETCOOLER_SETTINGS*)&CoolerSettings) == 4294967192 
+            && "This function is deprecated, it only works on Pascal cards."); // *from what I can tell!* It always returns this value.
 
     NvAPI_GPU_GetVoltageDomainsStatus = NvAPI_QueryInterface(0x0C16C7E2C); // Oops 0A4DFD3F2 is NvAPI_GPU_ClientPowerTopologyGetInfo 
 
     NV_GPU_VOLTAGE_DOMAINS_STATUS_V1 Status = {0};
     Status.version = NV_MAKE_STRUCT_VERSION(NV_GPU_VOLTAGE_DOMAINS_STATUS_V1, 1);
-//    Assert(NvAPI_GPU_GetVoltageDomainsStatus(GpuHandle, &Status) == 0);
-    
+    Assert(NvAPI_GPU_GetVoltageDomainsStatus(GpuHandle, &Status) == 4294967192 
+            && "This function is deprecated, it only works on Maxwell cards.");
 
     return 0;
 }

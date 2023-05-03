@@ -8,3 +8,13 @@
  #include "NVAPIInterface.h"
  //////////////////////////////////////////////////////////////////////
  #define NVAPIWRAPPER_MAX_GPU								256
+@@ -35,7 +34,9 @@
+ #define NVAPIWRAPPER_CAPS_GpuPowerMonitorGetStatus			0x00000100
+ #define NVAPIWRAPPER_CAPS_GpuThermChannelGetStatus			0x00000200
+ //////////////////////////////////////////////////////////////////////
++#ifndef NVAPI_INIT_STRUCT
+ #define NVAPI_INIT_STRUCT(s,v) { ZeroMemory(&s,sizeof(s)); s.version = sizeof(s) | (v<<16); }
++#endif
+ //////////////////////////////////////////////////////////////////////
+ class CNVAPIWrapper
+ {
