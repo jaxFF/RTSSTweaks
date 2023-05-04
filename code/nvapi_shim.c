@@ -223,22 +223,36 @@ struct NV_GPU_GETCOOLER_SETTINGS_V4; // TODO: PX1 uses 1368 bytes here. Reversin
 
 typedef void* (*NvAPI_QueryInterface_t)(u32);
 typedef NvStatus (__cdecl *NvAPI_Initialize_t)();
+typedef NvStatus (*NvAPI_Unload_t)(); // 0xD7C61344 TODO: Potentially extended
 typedef NvStatus (*NvAPI_EnumPhysicalGPUs_t)(NvPhysicalGpuHandle[64], u32*);
 
+typedef NvStatus (*NvAPI_SYS_GetDriverAndBranchVersion_t)(); // 0x2926AAAD
+typedef NvStatus (*NvAPI_GPU_GetBusId_t)(); // 0x1BE0B8E5
+typedef NvStatus (*NvAPI_GPU_GetBusSlotId_t)(); // 0x2A0A350F
+typedef NvStatus (*NvAPI_GPU_GetFullName_t)(); // 0xCEEE8E9F
+typedef NvStatus (*NvAPI_GPU_GetMemoryInfo_t)(); // 07F9B368 TODO: Potentially extended
+
 #ifndef _NVAPI_H
-typedef NvStatus (*NvAPI_GPU_GetAllClocks_t)(NvPhysicalGpuHandle, NV_GPU_CLOCK_INFO_V2*);
+typedef NvStatus (*NvAPI_GPU_GetAllClocks_t)(NvPhysicalGpuHandle, NV_GPU_CLOCK_INFO_V2*); // 0x1BD69F49
 #endif
-typedef NvStatus (*NvAPI_GPU_GetAllClockFrequencies_t)(NvPhysicalGpuHandle, NV_GPU_CLOCK_FREQUENCY_INFO_V2*); // TODO: Unrequired, public facing.
+typedef NvStatus (*NvAPI_GPU_GetAllClockFrequencies_t)(NvPhysicalGpuHandle, NV_GPU_CLOCK_FREQUENCY_INFO_V2*); // 0xDCB616C3 TODO: Unrequired, public facing.
+typedef NvStatus (*NvAPI_GPU_GetCurrentVoltage_t)(); // 0x465F9BCF
 // DEPRECATED: typedef NvStatus (*NvAPI_GPU_GetDynamicPstates_t)(NvPhysicalGpuHandle, NV_GPU_DYNAMIC_PSTATES_INFO_V1*); // 0x60DED2ED
 typedef NvStatus (*NvAPI_GPU_GetDynamicPstatesInfoEx_t)(NvPhysicalGpuHandle, NV_GPU_DYNAMIC_PSTATES_INFO_EX*); // 0x60DED2ED
  
-typedef NvStatus (*NvAPI_GPU_ClientVoltRailsGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1*);
-typedef NvStatus (*NvAPI_GPU_ClientFanCoolersGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1*);
-typedef NvStatus (*NvAPI_GPU_ClientPowerTopologyGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1*);
+typedef NvStatus (*NvAPI_GPU_ClientVoltRailsGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_VOLT_RAILS_STATUS_V1*); // 0x465F9BCF
+typedef NvStatus (*NvAPI_GPU_ClientFanCoolersGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_FAN_COOLERS_STATUS_V1*); // 0x35AED5E8
+typedef NvStatus (*NvAPI_GPU_ClientPowerTopologyGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1*); // 0xEDCF624E
 
 typedef NvStatus (*NvAPI_GPU_GetCoolerSettings_t)(NvPhysicalGpuHandle, NV_COOLER_TARGET, NV_GPU_GETCOOLER_SETTINGS*); // 0xDA141340
 typedef NvStatus (*NvAPI_GPU_GetVoltageDomainsStatus_t)(NvPhysicalGpuHandle, NV_GPU_VOLTAGE_DOMAINS_STATUS_V1*); // 0xC16C7E2C  Maxwell only, Assert that the gpu is > maxwell I guess.
-                                                                                            
+
+typedef NvStatus (*NvAPI_GPU_PowerMonitorGetInfo_t)(); // 0xC12EB19E
+typedef NvStatus (*NvAPI_GPU_PowerMonitorGetStatus_t)(); // 0xF40238EF
+typedef NvStatus (*NvAPI_GPU_ThermChannelGetInfo_t)(); // 0x0BC8163D
+typedef NvStatus (*NvAPI_GPU_ThermChannelGetStatus_t)(); // 0x65FE3AAD
+typedef NvStatus (*NvAPI_GPU_GetThermalSettings_t)(); // 0xE3640A56
+
 #ifndef NVAPI_API
 #if defined(NVAPI_SHIM_BUILD_AS_DLL) && defined(NVAPI_SHIM_IMPLEMENTATION)
 #define NVAPI_API __declspec(dllexport)
@@ -247,7 +261,7 @@ typedef NvStatus (*NvAPI_GPU_GetVoltageDomainsStatus_t)(NvPhysicalGpuHandle, NV_
 #else
 #define NVAPI_API extern
 #endif
-#endif // ShimApi
+#endif // NVAPI_API 
 
 #ifdef __cplusplus
 extern "C" {
@@ -268,7 +282,7 @@ extern "C" {
 //  RTSSOverlayEditor is interested in. We can redirect the NvAPI_Initialize call to our 
 //  own version, which will do whatever we need from main() test code, and then call the 
 //  correct NvAPI_Initialize. This will be relevant for every NvAPI funtion call here.
-//NvAPI_Initialize
+//
 // We wish to achieve OverlayEditor.dll executing our shim functions before 
 //  hitting the correct NvAPI call. We will export the functions through the nvapi
 //  shim we build, which will just have to be a shim / proxy / wrapper to inject
