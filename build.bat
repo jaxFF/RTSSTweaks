@@ -3,18 +3,21 @@
 set BuildDir=%~dp0build
 set CodeDir=%~dp0code
 set ThirdPartyCodeDir=%~dp0thirdparty
-set MSVC_CommonCompiler=-I%ThirdPartyCodeDir%\rtss-sdk\Include -I%ThirdPartyCodeDir%\adl-sdk\include -I%ThirdPartyCodeDir%\nvapi-developer -I%ThirdPartyCodeDir%\igcl\includes -I%ThirdPartyCodeDir%\msiab-mahm-sdk\Include -Zo -Zi -O2 -Oi -Oy- -Gy -Gs -nologo user32.lib
-REM -Gm -FC -Zo -Zi -GS- -nologo -std:c11 ntdll.lib winmm.lib
+set CommonCompiler=-DNVAPI_SHIM_BUILD_AS_DLL -DNVAPI_SHIM_IMPLEMENTATION -I%ThirdPartyCodeDir%\rtss-sdk\Include -I%ThirdPartyCodeDir%\adl-sdk\include -I%ThirdPartyCodeDir%\nvapi-developer -I%ThirdPartyCodeDir%\igcl\includes -I%ThirdPartyCodeDir%\msiab-mahm-sdk\Include -std:c11 -Zo -Zi -O2 -Oi -Oy- -Gy -Gs- -Gw -nologo user32.lib
+set CommonLinker=-nologo -INCREMENTAL:NO -subsystem:WINDOWS -OPT:REF -OPT:ICF -TLBID:1 -NXCOMPAT -MACHINE:X86 user32.lib
 echo Building from %BuildDir%
-echo Compilation Line: %MSVC_CommonCompiler%
+echo Compilation Line: %CommonCompiler% %CommonLinker%
 
 if not exist %BuildDir% mkdir %BuildDir%
 pushd %BuildDir%
-REM cl.exe %MSVC_CommonCompiler% %CodeDir%\RTSSTweaks.c
-cl.exe %MSVC_CommonCompiler% %CodeDir%\nvapi_shim.c /link -pdb:nvapi_shimexe%random%.pdb 
-REM cl.exe /MD /LD %MSVC_CommonCompiler% -Fonvapi_shim.obj %CodeDir%\nvapi_shim.c /link -pdb:nvapi_shimdll%random%.pdb
-link.exe -nologo -INCREMENTAL:NO -SUBSYSTEM:WINDOWS -OPT:REF -OPT:ICF -TLBID:1 -NXCOMPAT -MACHINE:X86 -DLL -out:nvapi_shim.dll nvapi_shim.obj user32.lib
-del *.ilk
+del nvapi_*.pdb
+
+REM cl.exe %CommonCompiler% %CodeDir%\RTSSTweaks.c
+
+REM -WHOLEARCHIVE
+cl.exe %CommonCompiler% %CodeDir%\nvapi_shim.c /link -pdb:nvapi_shim%random%.pdb 
+link.exe %CommonLinker% -DLL -DEF:../code/nvapi_shim.def -out:nvapi_shim.dll nvapi_shim.obj %ThirdPartyCodeDir%\nvapi-developer\x86\nvapi.lib
+
 del *.exp
 REM del *.obj
 popd

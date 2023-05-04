@@ -1,0 +1,3 @@
+LIBRARY NVAPI_SHIM
+EXPORTS 
+NvAPI_Initialize

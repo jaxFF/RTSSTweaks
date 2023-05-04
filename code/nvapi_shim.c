@@ -222,7 +222,7 @@ struct NV_GPU_GETCOOLER_SETTINGS_V3 { // 1288 bytes..
 struct NV_GPU_GETCOOLER_SETTINGS_V4; // TODO: PX1 uses 1368 bytes here. Reversing from here should be ez, *if I had a GTX card on hand*
 
 typedef void* (*NvAPI_QueryInterface_t)(u32);
-typedef NvStatus (*NvAPI_Initialize_t)();
+typedef NvStatus (__cdecl *NvAPI_Initialize_t)();
 typedef NvStatus (*NvAPI_EnumPhysicalGPUs_t)(NvPhysicalGpuHandle[64], u32*);
 
 #ifndef _NVAPI_H
@@ -238,24 +238,28 @@ typedef NvStatus (*NvAPI_GPU_ClientPowerTopologyGetStatus_t)(NvPhysicalGpuHandle
 
 typedef NvStatus (*NvAPI_GPU_GetCoolerSettings_t)(NvPhysicalGpuHandle, NV_COOLER_TARGET, NV_GPU_GETCOOLER_SETTINGS*); // 0xDA141340
 typedef NvStatus (*NvAPI_GPU_GetVoltageDomainsStatus_t)(NvPhysicalGpuHandle, NV_GPU_VOLTAGE_DOMAINS_STATUS_V1*); // 0xC16C7E2C  Maxwell only, Assert that the gpu is > maxwell I guess.
-                                                                                                                 
-#ifndef OVERLAYEDITOR_BUILD 
-#define DllApi __declspec(dllexport)
+                                                                                            
+#ifndef NVAPI_API
+#if defined(NVAPI_SHIM_BUILD_AS_DLL) && defined(NVAPI_SHIM_IMPLEMENTATION)
+#define NVAPI_API __declspec(dllexport)
+#elif defined(NVAPI_SHIM_BUILD_AS_DLL)
+#define NVAPI_API __declspec(dllimport)
 #else
-#define DllApi __declspec(dllimport)
+#define NVAPI_API extern
 #endif
+#endif // ShimApi
 
 #ifdef __cplusplus
 extern "C" {
-#ifndef OVERLAYEDITOR_BUILD // This function definition *has* to be excluded from the "header", because it's exposed in the public NvAPI.
-    DllApi NvAPI_Initialize_t NvAPI_Initialize;
 #endif
+#if !defined(NVAPI_SHIM_IMPLEMENTATION) && !defined(_NVAPI_H) // This function definition *has* to be excluded from the "header", because it's exposed in the public NvAPI. 
+    NVAPI_API NvAPI_Initialize_t NvAPI_Initialize;
 #endif
-    DllApi NvAPI_GPU_ClientVoltRailsGetStatus_t NvAPI_GPU_ClientVoltRailsGetStatus;
-    DllApi NvAPI_GPU_ClientFanCoolersGetStatus_t NvAPI_GPU_ClientFanCoolersGetStatus;
-    DllApi NvAPI_GPU_ClientPowerTopologyGetStatus_t NvAPI_GPU_ClientPowerTopologyGetStatus;
-    DllApi NvAPI_GPU_GetCoolerSettings_t NvAPI_GPU_GetCoolerSettings;
-    DllApi NvAPI_GPU_GetVoltageDomainsStatus_t NvAPI_GPU_GetVoltageDomainsStatus;
+    NVAPI_API NvAPI_GPU_ClientVoltRailsGetStatus_t NvAPI_GPU_ClientVoltRailsGetStatus;
+    NVAPI_API NvAPI_GPU_ClientFanCoolersGetStatus_t NvAPI_GPU_ClientFanCoolersGetStatus;
+    NVAPI_API NvAPI_GPU_ClientPowerTopologyGetStatus_t NvAPI_GPU_ClientPowerTopologyGetStatus;
+    NVAPI_API NvAPI_GPU_GetCoolerSettings_t NvAPI_GPU_GetCoolerSettings;
+    NVAPI_API NvAPI_GPU_GetVoltageDomainsStatus_t NvAPI_GPU_GetVoltageDomainsStatus;
 #ifdef __cplusplus
 }
 #endif
@@ -264,7 +268,7 @@ extern "C" {
 //  RTSSOverlayEditor is interested in. We can redirect the NvAPI_Initialize call to our 
 //  own version, which will do whatever we need from main() test code, and then call the 
 //  correct NvAPI_Initialize. This will be relevant for every NvAPI funtion call here.
-//
+//NvAPI_Initialize
 // We wish to achieve OverlayEditor.dll executing our shim functions before 
 //  hitting the correct NvAPI call. We will export the functions through the nvapi
 //  shim we build, which will just have to be a shim / proxy / wrapper to inject
@@ -273,10 +277,14 @@ extern "C" {
 
 // TODO: Write the custom data sources for RTSSOverlayEditor.dll
 // TODO: NVIDIA Reflex API: Render Latency as a data source
-
+                    
+#ifdef NVAPI_SHIM_IMPLEMENTATION 
 //#include "nvapi_shim_loader.c"
+#else
+#pragma comment(lib, "../nvapi_shim.lib") 
+#endif
 
-#ifndef __cplusplus
+#if defined(NVAPI_SHIM_IMPLEMENTATION)
 DWORD WINAPI Load(LPVOID Data) {
     MessageBoxA(0, "proxying works !", "nvapi_shim.dll", MB_OK);
     return 1;
@@ -295,15 +303,7 @@ BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
     return true;
 }
 
-#endif
-
-#ifdef OVERLAYEDITOR_BUILD
-#pragma comment(lib, "../nvapi_shim.lib") 
-#endif
-
-#ifndef OVERLAYEDITOR_BUILD
-
-extern NvStatus NvAPI_Initialize() {
+NVAPI_API NvStatus NvAPI_Initialize() {
     MessageBoxA(0, "NvAPI_Initalize hooked!", "", MB_OK);
     return 0;
 }
