@@ -5,7 +5,16 @@
  #include "Log.h"
  //////////////////////////////////////////////////////////////////////
 -#pragma comment(lib, "nvapi.lib") 
-+///
++#pragma comment(lib, "../../thirdparty/nvapi-developer/x86/nvapi.lib") 
  //////////////////////////////////////////////////////////////////////
  CNVAPIWrapper::CNVAPIWrapper()
  {
+@@ -57,6 +57,8 @@
+ 
+ 	//init API
+ 
++ 	MessageBoxA(0, "NvAPI_Initalize prehook", "", MB_OK);
++
+ 	NvAPI_Initialize();
+ 
+ 	//enumerate traditional and compute GPUs

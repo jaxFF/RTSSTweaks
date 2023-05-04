@@ -1,3 +1,0 @@
-pushd RTSSOverlayEditor
-msbuild.exe -m OverlayEditor_VS2019.sln /p:Configuration=Debug /p:Platform="Win32" /nologo /p:IncludePath="..\rtss-sdk\Include;..\rtss-sdk\Include\HwInfo;..\rtss-sdk\Include\MSIAB;..\adl-sdk\include;..\nvapi-developer;..\igcl\includes;..\igcl\wrapper;$(IncludePath)"
-popd

@@ -7,7 +7,7 @@
 
 #include "Log.h"
 //////////////////////////////////////////////////////////////////////
-///
+#pragma comment(lib, "../../thirdparty/nvapi-developer/x86/nvapi.lib") 
 //////////////////////////////////////////////////////////////////////
 CNVAPIWrapper::CNVAPIWrapper()
 {
@@ -56,6 +56,8 @@ void CNVAPIWrapper::Init()
 	APPEND_LOG("Initializing NVAPI wrapper");
 
 	//init API
+
+ 	MessageBoxA(0, "NvAPI_Initalize prehook", "", MB_OK);
 
 	NvAPI_Initialize();
 

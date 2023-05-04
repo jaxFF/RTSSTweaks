@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #define WIN32_LEAN_AND_MEAN
+#include <process.h>
 #include <windows.h>
 
 #if _WIN32 || _WIN64
@@ -28,6 +29,8 @@ typedef int32_t s32;
 typedef u32 NvStatus;
 
 #ifndef _NVAPI_H
+typedef u32 NvAPI_Status;
+
 typedef u8 NvU8;
 typedef u16 NvU16;
 typedef u32 NvU32;
@@ -219,7 +222,7 @@ struct NV_GPU_GETCOOLER_SETTINGS_V3 { // 1288 bytes..
 struct NV_GPU_GETCOOLER_SETTINGS_V4; // TODO: PX1 uses 1368 bytes here. Reversing from here should be ez, *if I had a GTX card on hand*
 
 typedef void* (*NvAPI_QueryInterface_t)(u32);
-typedef NvStatus (*NvAPI_Initalize_t)();
+typedef NvStatus (*NvAPI_Initialize_t)();
 typedef NvStatus (*NvAPI_EnumPhysicalGPUs_t)(NvPhysicalGpuHandle[64], u32*);
 
 #ifndef _NVAPI_H
@@ -234,35 +237,96 @@ typedef NvStatus (*NvAPI_GPU_ClientFanCoolersGetStatus_t)(NvPhysicalGpuHandle, N
 typedef NvStatus (*NvAPI_GPU_ClientPowerTopologyGetStatus_t)(NvPhysicalGpuHandle, NV_GPU_CLIENT_POWER_TOPOLOGY_STATUS_V1*);
 
 typedef NvStatus (*NvAPI_GPU_GetCoolerSettings_t)(NvPhysicalGpuHandle, NV_COOLER_TARGET, NV_GPU_GETCOOLER_SETTINGS*); // 0xDA141340
-
 typedef NvStatus (*NvAPI_GPU_GetVoltageDomainsStatus_t)(NvPhysicalGpuHandle, NV_GPU_VOLTAGE_DOMAINS_STATUS_V1*); // 0xC16C7E2C  Maxwell only, Assert that the gpu is > maxwell I guess.
+                                                                                                                 
+#ifndef OVERLAYEDITOR_BUILD 
+#define DllApi __declspec(dllexport)
+#else
+#define DllApi __declspec(dllimport)
+#endif
 
-NvAPI_GPU_ClientVoltRailsGetStatus_t NvAPI_GPU_ClientVoltRailsGetStatus = 0;
-NvAPI_GPU_ClientFanCoolersGetStatus_t NvAPI_GPU_ClientFanCoolersGetStatus = 0;
-NvAPI_GPU_ClientPowerTopologyGetStatus_t NvAPI_GPU_ClientPowerTopologyGetStatus = {0};
-NvAPI_GPU_GetCoolerSettings_t NvAPI_GPU_GetCoolerSettings = 0;
-NvAPI_GPU_GetVoltageDomainsStatus_t NvAPI_GPU_GetVoltageDomainsStatus = 0;
+#ifdef __cplusplus
+extern "C" {
+#ifndef OVERLAYEDITOR_BUILD // This function definition *has* to be excluded from the "header", because it's exposed in the public NvAPI.
+    DllApi NvAPI_Initialize_t NvAPI_Initialize;
+#endif
+#endif
+    DllApi NvAPI_GPU_ClientVoltRailsGetStatus_t NvAPI_GPU_ClientVoltRailsGetStatus;
+    DllApi NvAPI_GPU_ClientFanCoolersGetStatus_t NvAPI_GPU_ClientFanCoolersGetStatus;
+    DllApi NvAPI_GPU_ClientPowerTopologyGetStatus_t NvAPI_GPU_ClientPowerTopologyGetStatus;
+    DllApi NvAPI_GPU_GetCoolerSettings_t NvAPI_GPU_GetCoolerSettings;
+    DllApi NvAPI_GPU_GetVoltageDomainsStatus_t NvAPI_GPU_GetVoltageDomainsStatus;
+#ifdef __cplusplus
+}
+#endif
+
+// TODO: Structure this into an actual shim library that intercepts the API calls
+//  RTSSOverlayEditor is interested in. We can redirect the NvAPI_Initialize call to our 
+//  own version, which will do whatever we need from main() test code, and then call the 
+//  correct NvAPI_Initialize. This will be relevant for every NvAPI funtion call here.
+//
+// We wish to achieve OverlayEditor.dll executing our shim functions before 
+//  hitting the correct NvAPI call. We will export the functions through the nvapi
+//  shim we build, which will just have to be a shim / proxy / wrapper to inject
+//  code without actually having to use an injector. We just beat NVIDIA by being
+//  loaded first based on paths, doing our stuff first, then executing the correct NVAPI call.
+
+// TODO: Write the custom data sources for RTSSOverlayEditor.dll
+// TODO: NVIDIA Reflex API: Render Latency as a data source
+
+//#include "nvapi_shim_loader.c"
+
+#ifndef __cplusplus
+DWORD WINAPI Load(LPVOID Data) {
+    MessageBoxA(0, "proxying works !", "nvapi_shim.dll", MB_OK);
+    return 1;
+}
+
+BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
+    switch (fdwReason) {
+        case DLL_PROCESS_ATTACH: {
+            DisableThreadLibraryCalls(hinstDLL);
+            CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Load, NULL, 0, NULL);
+        } break;
+        case DLL_PROCESS_DETACH: {
+// TODO:            FreeLibrary()
+        } break;
+    }
+    return true;
+}
+
+#endif
+
+#ifdef OVERLAYEDITOR_BUILD
+#pragma comment(lib, "../nvapi_shim.lib") 
+#endif
 
 #ifndef OVERLAYEDITOR_BUILD
+
+extern NvStatus NvAPI_Initialize() {
+    MessageBoxA(0, "NvAPI_Initalize hooked!", "", MB_OK);
+    return 0;
+}
+
 int main() {
     // NOTE, TODO: Ensure this test function is compiled with a 32-bit version of cl.exe
 
     HMODULE NvAPIHandle = 0;
     NvAPIHandle = LoadLibrary("nvapi.dll");
 
+    NvAPI_Initialize_t NvAPI_Initialize = 0;
     NvAPI_QueryInterface_t NvAPI_QueryInterface = 0;
-    NvAPI_Initalize_t NvAPI_Initalize = 0;
     NvAPI_EnumPhysicalGPUs_t NvAPI_EnumPhysicalGPUs = 0;
     NvAPI_GPU_GetAllClocks_t NvAPI_GPU_GetAllClocks = 0;
     NvAPI_GPU_GetDynamicPstatesInfoEx_t NvAPI_GPU_GetDynamicPstatesInfoEx = {0};
 
     NvAPI_QueryInterface = (NvAPI_QueryInterface_t)GetProcAddress(NvAPIHandle, "nvapi_QueryInterface");
 
-    NvAPI_Initalize = (NvAPI_Initalize_t)NvAPI_QueryInterface(NvAPIInitalize_Address);
+    NvAPI_Initialize = (NvAPI_Initialize_t)NvAPI_QueryInterface(NvAPIInitalize_Address);
 
     NvAPI_EnumPhysicalGPUs = NvAPI_QueryInterface(NvAPIEnumPhysicalGPUs_Address);
 
-    NvAPI_Initalize();
+    NvAPI_Initialize();
 
     u32 GpuCount = 0;
     NvPhysicalGpuHandle GpuHandles[64] = { 0 };
